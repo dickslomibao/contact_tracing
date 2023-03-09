@@ -1,3 +1,4 @@
+import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/firebase_options.dart';
 import 'package:contact_tracing/view/screens/home.dart';
 import 'package:contact_tracing/view/screens/user_login.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.montserrat().fontFamily,
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: primaryColor,
         textTheme: const TextTheme(
           titleMedium: TextStyle(
             fontSize: 35,
