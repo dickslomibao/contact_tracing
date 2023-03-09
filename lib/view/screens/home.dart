@@ -1,11 +1,11 @@
+import 'package:contact_tracing/view/screens/register_client.dart';
+import 'package:contact_tracing/view/screens/register_establishment.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final roundedBtn = ElevatedButton.styleFrom(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
+  final roundedBtn = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20),
   );
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,11 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(12.0),
+          // decoration: BoxDecoration(
+          //   image: DecorationImage(
+          //     image: AssetImage('assets/images/bg-1.jpg'),
+          //   ),
+          // ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +42,9 @@ class HomeScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {},
-                style: roundedBtn,
+                style: ElevatedButton.styleFrom(
+                  shape: roundedBtn,
+                ),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text("Login"),
@@ -46,9 +53,17 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 12.0,
               ),
-              ElevatedButton(
-                style: roundedBtn,
-                onPressed: () {},
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  shape: roundedBtn,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => RegisterUser(),
+                    ),
+                  );
+                },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text("Sign up as Client"),
@@ -57,9 +72,17 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 12.0,
               ),
-              ElevatedButton(
-                style: roundedBtn,
-                onPressed: () {},
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  shape: roundedBtn,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => RegisterEstablishment(),
+                    ),
+                  );
+                },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text("Sign up as Establishment"),

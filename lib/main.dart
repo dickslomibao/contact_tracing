@@ -32,8 +32,9 @@ class MyApp extends StatelessWidget {
             color: Colors.black45,
           ),
         ),
+        appBarTheme: AppBarTheme(),
       ),
-      home:  HomeScreen(),
+      home: HomeScreen(),
     );
   }
 }
