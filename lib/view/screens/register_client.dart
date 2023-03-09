@@ -39,8 +39,6 @@ class _RegisterUserState extends State<RegisterUser> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +57,10 @@ class _RegisterUserState extends State<RegisterUser> {
                 height: 20,
               ),
               TextFormField(
-                controller:  emailController,
-                  validator: (value) {
-                  if(value == null || value.isEmpty){
-                    return "Please enter a valid address.";
+                controller: emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Email address is required";
                   }
                   return null;
                 },
@@ -79,7 +77,12 @@ class _RegisterUserState extends State<RegisterUser> {
               ),
               TextFormField(
                 controller: passwordController,
-              
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Password is required";
+                  }
+                  return null;
+                },
                 obscureText: showPassword,
                 style: const TextStyle(
                   fontSize: 16,
@@ -116,7 +119,7 @@ class _RegisterUserState extends State<RegisterUser> {
               ),
               ElevatedButton(
                 onPressed: () {
-                   _formKey.currentState!.validate();
+                  _formKey.currentState!.validate();
                 },
                 style: ElevatedButton.styleFrom(
                   shape: roundedBtn,
