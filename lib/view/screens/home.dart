@@ -1,12 +1,11 @@
+import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/view/screens/register_client.dart';
 import 'package:contact_tracing/view/screens/register_establishment.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final roundedBtn = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(20),
-  );
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => RegisterUser(),
+                      builder: (context) =>  RegisterUser(),
                     ),
                   );
                 },
@@ -85,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => RegisterEstablishment(),
+                      builder: (context) => const RegisterEstablishment(),
                     ),
                   );
                 },
