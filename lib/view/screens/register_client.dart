@@ -1,16 +1,18 @@
 import 'package:contact_tracing/constant/style.dart';
+import 'package:contact_tracing/view/widgets/elevated_btn.dart';
+import 'package:contact_tracing/view/widgets/txt_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class RegisterUser extends StatefulWidget {
-  RegisterUser({super.key});
+class RegisterClient extends StatefulWidget {
+  const RegisterClient({super.key});
 
   @override
-  State<RegisterUser> createState() => _RegisterUserState();
+  State<RegisterClient> createState() => _RegisterClientState();
 }
 
-class _RegisterUserState extends State<RegisterUser> {
+class _RegisterClientState extends State<RegisterClient> {
   final _formKey = GlobalKey<FormState>();
   bool showPassword = true;
   TextEditingController emailController = TextEditingController();
@@ -43,93 +45,98 @@ class _RegisterUserState extends State<RegisterUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign up'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Color.fromRGBO(0, 0, 0, .7),
+          size: 30,
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text("Register an account"),
-              const SizedBox(
-                height: 20,
+      body: Center(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: backgroundCover,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      "iContact",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Image.asset('assets/images/img-home1.png'),
+                    Text(
+                      "Create an account",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                    spacer(20),
+                    TextFormFieldWidget(
+                      controller: emailController,
+                      validator: (value) {
+                        print(value);
+                        if (value == null || value.isEmpty) {
+                          return "Email address is required";
+                        }
+                        return null;
+                      },
+                      label: 'Email Addresss',
+                    ),
+                    spacer(10),
+                    TextFormField(
+                      controller: passwordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password is required";
+                        }
+                        return null;
+                      },
+                      obscureText: showPassword,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        suffixIcon: IconButton(
+                          icon: Icon(showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                    spacer(10),
+                    TextFormField(
+                      obscureText: showPassword,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: "Re-type Password",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    spacer(20),
+                    ElevatedButtonWidget(
+                      onPressed: () {
+                        _formKey.currentState!.validate();
+                      },
+                      label: 'Sign up as client',
+                    ),
+                  ],
+                ),
               ),
-              TextFormField(
-                controller: emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Email address is required";
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  labelText: "Email address",
-                  border: OutlineInputBorder(),
-                ),
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: passwordController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Password is required";
-                  }
-                  return null;
-                },
-                obscureText: showPassword,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                        showPassword ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                  ),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                obscureText: showPassword,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-                decoration: const InputDecoration(
-                  labelText: "Re-type Password",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _formKey.currentState!.validate();
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: roundedBtn,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(13.0),
-                  child: Text("Register as client"),
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),
