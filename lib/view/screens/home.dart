@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
+  HomeScreen({super.key});
+  final roundedBtn = ElevatedButton.styleFrom(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +37,7 @@ class HomeScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {},
+                style: roundedBtn,
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text("Login"),
@@ -42,10 +47,22 @@ class HomeScreen extends StatelessWidget {
                 height: 12.0,
               ),
               ElevatedButton(
+                style: roundedBtn,
                 onPressed: () {},
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text("Sign up"),
+                  child: Text("Sign up as Client"),
+                ),
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              ElevatedButton(
+                style: roundedBtn,
+                onPressed: () {},
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text("Sign up as Establishment"),
                 ),
               ),
             ],
