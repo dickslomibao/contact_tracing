@@ -31,7 +31,7 @@ const backgroundCover = BoxDecoration(
   image: DecorationImage(
     image: AssetImage('assets/images/bg_line.png'),
     alignment: Alignment.bottomCenter,
-    fit: BoxFit.contain,
+    fit: BoxFit.cover,
     opacity: .05,
   ),
 );
