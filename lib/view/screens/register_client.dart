@@ -52,10 +52,9 @@ class _RegisterClientState extends State<RegisterClient> {
           size: 30,
         ),
       ),
-      body: Center(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: backgroundCover,
+      body: Container(
+        decoration: backgroundCover,
+        child: Center(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(20.0),

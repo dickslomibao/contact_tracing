@@ -29,76 +29,79 @@ class _LoginScrenState extends State<LoginScren> {
           size: 30,
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  spacer(20),
-                  Text(
-                    "iContact",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Image.asset('assets/images/img-home1.png'),
-                  Text(
-                    "Sign in",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  spacer(20),
-                  TextFormFieldWidget(
-                    controller: emailController,
-                    validator: (value) {
-                      print(value);
-                      if (value == null || value.isEmpty) {
-                        return "Email address is required";
-                      }
-                      return null;
-                    },
-                    label: 'Email Addresss',
-                  ),
-                  spacer(10),
-                  TextFormField(
-                    controller: passwordController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Password is required";
-                      }
-                      return null;
-                    },
-                    obscureText: showPassword,
-                    style: const TextStyle(
-                      fontSize: 16,
+      body: Container(
+        decoration: backgroundCover,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    spacer(20),
+                    Text(
+                      "iContact",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.key_outlined),
-                      labelText: "Password",
-                      suffixIcon: IconButton(
-                        icon: Icon(showPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
+                    Image.asset('assets/images/img-home1.png'),
+                    Text(
+                      "Sign in",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                    spacer(20),
+                    TextFormFieldWidget(
+                      controller: emailController,
+                      validator: (value) {
+                        print(value);
+                        if (value == null || value.isEmpty) {
+                          return "Email address is required";
+                        }
+                        return null;
+                      },
+                      label: 'Email Addresss',
+                    ),
+                    spacer(10),
+                    TextFormField(
+                      controller: passwordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password is required";
+                        }
+                        return null;
+                      },
+                      obscureText: showPassword,
+                      style: const TextStyle(
+                        fontSize: 16,
                       ),
-                      border: const OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.key_outlined),
+                        labelText: "Password",
+                        suffixIcon: IconButton(
+                          icon: Icon(showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                        ),
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  spacer(20),
-                  ElevatedButtonWidget(
-                    onPressed: () {
-                      _formKey.currentState!.validate();
-                    },
-                    label: 'Login',
-                  ),
-                ],
+                    spacer(20),
+                    ElevatedButtonWidget(
+                      onPressed: () {
+                        _formKey.currentState!.validate();
+                      },
+                      label: 'Login',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

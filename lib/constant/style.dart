@@ -32,7 +32,7 @@ const backgroundCover = BoxDecoration(
     image: AssetImage('assets/images/bg_line.png'),
     alignment: Alignment.bottomCenter,
     fit: BoxFit.cover,
-    opacity: .05,
+    opacity: .08,
   ),
 );
 MaterialColor primaryColor = const MaterialColor(
