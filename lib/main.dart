@@ -8,7 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.android,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
 }
@@ -24,12 +24,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         textTheme: const TextTheme(
           titleMedium: TextStyle(
-            fontSize: 32,
+            fontSize: 35,
             fontWeight: FontWeight.w900,
+            color: Colors.deepPurple,
           ),
           titleSmall: TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             color: Colors.black45,
           ),
           displayMedium: TextStyle(

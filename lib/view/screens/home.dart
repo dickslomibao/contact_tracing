@@ -12,10 +12,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(40.0),
           // decoration: BoxDecoration(
           //   image: DecorationImage(
-          //     image: AssetImage('assets/images/bg-1.jpg'),
+          //     image: AssetImage('assets/images/bg1.jpg'),
           //   ),
           // ),
           child: Column(
@@ -24,17 +24,23 @@ class HomeScreen extends StatelessWidget {
             children: [
               Text(
                 "Contact Trace",
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
+              const SizedBox(
+                height: 5.0,
+              ),
               Text(
-                "A contact tracking app for students of Mobile app",
+                "A contact tracking app for students of Mobile Application Development 2",
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               const SizedBox(
-                height: 12.0,
+                height: 30.0,
               ),
               Text(
                 "Welcome! Please login or sign up.",
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displayMedium,
               ),
               const SizedBox(
