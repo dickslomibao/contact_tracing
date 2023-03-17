@@ -2,11 +2,10 @@ import 'package:contact_tracing/view/widgets/elevated_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_tracing/constant/style.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:contact_tracing/view/widgets/outline_btn.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
