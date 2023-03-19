@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           return HomeScreen();
         },
         routes: <RouteBase>[
-           GoRoute(
+          GoRoute(
             path: 'login',
             builder: (BuildContext context, GoRouterState state) {
               return const LoginScren();
@@ -48,8 +48,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: GoogleFonts.montserrat().fontFamily,
         primarySwatch: primaryColor,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
         textTheme: const TextTheme(
           titleLarge: TextStyle(
             fontSize: 35,

@@ -1,6 +1,9 @@
 import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/view/widgets/elevated_btn.dart';
 import 'package:contact_tracing/view/widgets/txt_form_field.dart';
+import 'package:contact_tracing/view/widgets/txt_form_field_password.dart';
+import 'package:contact_tracing/view_model/validator.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -17,27 +20,29 @@ class _RegisterClientState extends State<RegisterClient> {
   bool showPassword = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController comfirmPasswordController = TextEditingController();
 
   void rigesterClient() async {
-    // if(_formKey.currentState!.validate()){
-
-    // }
-    return;
-    EasyLoading.show(status: 'Processing');
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: 'a25@gmail.com', password: '123456');
-      print("registeed");
-      EasyLoading.showSuccess('User account Created');
-    } on FirebaseAuthException catch (e) {
-      EasyLoading.dismiss();
-      if (e.code == "email-already-in-use") {
-        EasyLoading.showError("Email already used");
+    if (_formKey.currentState!.validate()) {
+      EasyLoading.show(status: 'Processing');
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        emailController.text = "";
+        passwordController.text = "";
+        comfirmPasswordController.text = "";
+        EasyLoading.showSuccess('User account Created');
+      } on FirebaseAuthException catch (e) {
+        EasyLoading.dismiss();
+        if (e.code == "email-already-in-use") {
+          EasyLoading.showError("Email already used");
+        }
+        if (e.code == "weak-password") {
+          EasyLoading.showError("Please enter a secure password");
+        }
       }
-      if (e.code == "weak-password") {
-        EasyLoading.showError("Please enter a secure password");
-      }
-      print(e.code);
     }
   }
 
@@ -78,57 +83,38 @@ class _RegisterClientState extends State<RegisterClient> {
                     TextFormFieldWidget(
                       controller: emailController,
                       validator: (value) {
-                        print(value);
-                        if (value == null || value.isEmpty) {
-                          return "Email address is required";
-                        }
-                        return null;
+                        return Validator.validateEmail(value);
                       },
                       label: 'Email Addresss',
                     ),
                     spacer(10),
-                    TextFormField(
+                    TxtFormPasswordWidget(
                       controller: passwordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Password is required";
-                        }
-                        return null;
+                      label: 'Password',
+                      obscure: showPassword,
+                      suffixOnpressed: () {
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
                       },
-                      obscureText: showPassword,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        suffixIcon: IconButton(
-                          icon: Icon(showPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                        ),
-                        border: const OutlineInputBorder(),
-                      ),
+                      validator: (value) {
+                        return Validator.validatePassword(value);
+                      },
                     ),
                     spacer(10),
-                    TextFormField(
-                      obscureText: showPassword,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      decoration: const InputDecoration(
-                        labelText: "Re-type Password",
-                        border: OutlineInputBorder(),
-                      ),
+                    TxtFormPasswordWidget(
+                      controller: comfirmPasswordController,
+                      label: 'Re-type password',
+                      suffixOnpressed: () {},
+                      validator: (value) {
+                        return Validator.validateComfirmPassword(
+                            value, passwordController.text);
+                      },
                     ),
                     spacer(20),
                     ElevatedButtonWidget(
                       onPressed: () {
-                        _formKey.currentState!.validate();
+                        rigesterClient();
                       },
                       label: 'Sign up as client',
                     ),
