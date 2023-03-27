@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_tracing/constant/style.dart';
+import 'package:contact_tracing/view/screens/client_home.dart';
 import 'package:contact_tracing/view/widgets/comfirm_alert.dart';
 import 'package:contact_tracing/view/widgets/elevated_btn.dart';
 import 'package:contact_tracing/view/widgets/outline_btn.dart';
@@ -30,7 +31,7 @@ class _RegisterClientState extends State<RegisterClient> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController comfirmPasswordController = TextEditingController();
   final collectionPath = "users";
-  @override
+
   void rigesterClient() async {
     if (_formKey.currentState!.validate()) {
       showDialog(
@@ -74,10 +75,9 @@ class _RegisterClientState extends State<RegisterClient> {
                 comfirmPasswordController.text = "";
                 if (context.mounted) {
                   Navigator.of(context).pop();
-                  showDialog(
-                    context: context,
-                    builder: (context) => const AlertDialog(
-                      content: Text('Success'),
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ClientHome(uuid: uid),
                     ),
                   );
                 }

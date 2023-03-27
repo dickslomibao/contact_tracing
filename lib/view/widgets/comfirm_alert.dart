@@ -1,11 +1,7 @@
 import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/view/widgets/elevated_btn.dart';
 import 'package:contact_tracing/view/widgets/outline_btn.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ComfirmAlert extends StatelessWidget {
   ComfirmAlert({super.key, required this.onYes, required this.onCancel});
