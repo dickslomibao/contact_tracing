@@ -25,10 +25,10 @@ class TxtFormPasswordWidget extends StatelessWidget {
         fontSize: 16,
       ),
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.key_outlined),
+        prefixIcon: const Icon(Icons.lock_outline),
         labelText: label,
         suffixIcon: IconButton(
-          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off),
+          icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
           onPressed: () {
             suffixOnpressed();
           },

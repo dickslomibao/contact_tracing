@@ -54,6 +54,7 @@ class _LoginScrenState extends State<LoginScren> {
                     ),
                     spacer(20),
                     TextFormFieldWidget(
+                      icon: const Icon(Icons.email_outlined),
                       controller: emailController,
                       validator: (value) {
                         print(value);

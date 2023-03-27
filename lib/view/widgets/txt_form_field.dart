@@ -6,11 +6,12 @@ class TextFormFieldWidget extends StatelessWidget {
     required this.controller,
     required this.validator,
     required this.label,
+    required this.icon,
   });
   TextEditingController controller;
   Function validator;
   String label;
-
+  Icon icon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -19,7 +20,7 @@ class TextFormFieldWidget extends StatelessWidget {
         return validator(value);
       },
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.email_outlined),
+        prefixIcon: icon,
         labelText: label,
         border: const OutlineInputBorder(),
       ),

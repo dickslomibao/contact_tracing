@@ -10,6 +10,7 @@ Widget spacer(double height) {
 const mainColor = Color(0xffDC9754);
 const whiteColor = Color(0xffFBF9F7);
 const blackColor = Color(0xff1F1F1F);
+const txtColor = Color.fromRGBO(0, 0, 0, .7);
 final roundedBtn = RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(10),
 );

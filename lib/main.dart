@@ -52,19 +52,24 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.montserrat().fontFamily,
         textTheme: const TextTheme(
           titleLarge: TextStyle(
-            fontSize: 35,
+            fontSize: 38,
             fontWeight: FontWeight.w900,
             color: mainColor,
           ),
           titleSmall: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w700,
-            color: Color.fromRGBO(0, 0, 0, .7),
+            color: txtColor,
           ),
           displayMedium: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Color.fromRGBO(0, 0, 0, .6),
+            color: txtColor,
+          ),
+          displayLarge: TextStyle(
+            fontSize: 23,
+            fontWeight: FontWeight.w600,
+            color: txtColor,
           ),
         ),
         appBarTheme: const AppBarTheme(),

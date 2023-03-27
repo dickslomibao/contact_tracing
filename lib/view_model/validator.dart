@@ -11,6 +11,22 @@ class Validator {
     return null;
   }
 
+  static dynamic validateName(value) {
+    if (value == null || value.isEmpty) {
+      return "Name is required";
+    }
+
+    return null;
+  }
+
+  static dynamic validateAddress(value) {
+    if (value == null || value.isEmpty) {
+      return "Address is required";
+    }
+
+    return null;
+  }
+
   static dynamic validatePassword(value) {
     if (value == null || value.isEmpty) {
       return "Password is required";
