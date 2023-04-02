@@ -2,10 +2,10 @@ import 'package:contact_tracing/constant/style.dart';
 import 'package:flutter/material.dart';
 
 class ElevatedButtonWidget extends StatelessWidget {
-  ElevatedButtonWidget(
+ const ElevatedButtonWidget(
       {super.key, required this.onPressed, required this.label});
-  Function onPressed;
-  String label;
+  final Function onPressed;
+  final String label;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

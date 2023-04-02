@@ -1,48 +1,22 @@
 import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/firebase_options.dart';
-import 'package:contact_tracing/view/screens/home.dart';
-import 'package:contact_tracing/view/screens/register_client.dart';
-import 'package:contact_tracing/view/screens/user_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:go_router/go_router.dart';
+import 'package:contact_tracing/route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final GoRouter _router = GoRouter(
-    routes: <RouteBase>[
-      GoRoute(
-        path: '/',
-        builder: (BuildContext context, GoRouterState state) {
-          return HomeScreen();
-        },
-        routes: <RouteBase>[
-          GoRoute(
-            path: 'login',
-            builder: (BuildContext context, GoRouterState state) {
-              return const LoginScren();
-            },
-          ),
-          GoRoute(
-            path: 'registerClient',
-            builder: (BuildContext context, GoRouterState state) {
-              return const RegisterClient();
-            },
-          ),
-        ],
-      ),
-    ],
-  );
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -51,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: primaryColor,
         fontFamily: GoogleFonts.montserrat().fontFamily,
         textTheme: const TextTheme(
-          titleLarge: TextStyle(
+          titleMedium: TextStyle(
             fontSize: 38,
             fontWeight: FontWeight.w900,
             color: mainColor,
@@ -74,7 +48,7 @@ class MyApp extends StatelessWidget {
         ),
         appBarTheme: const AppBarTheme(),
       ),
-      routerConfig: _router,
+      routerConfig: router,
       builder: EasyLoading.init(),
     );
   }

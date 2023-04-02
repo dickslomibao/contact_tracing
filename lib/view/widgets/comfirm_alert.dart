@@ -3,6 +3,7 @@ import 'package:contact_tracing/view/widgets/elevated_btn.dart';
 import 'package:contact_tracing/view/widgets/outline_btn.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ComfirmAlert extends StatelessWidget {
   ComfirmAlert({super.key, required this.onYes, required this.onCancel});
   Function onYes;
@@ -54,6 +55,6 @@ class ComfirmAlert extends StatelessWidget {
         )
       ],
     );
-    ;
+    
   }
 }

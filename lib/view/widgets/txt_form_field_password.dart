@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TxtFormPasswordWidget extends StatelessWidget {
-  TxtFormPasswordWidget(
+ const TxtFormPasswordWidget(
       {super.key,
       required this.controller,
       this.obscure = true,
       required this.suffixOnpressed,
       required this.validator,
-      required this.label});
-  TextEditingController controller;
-  bool obscure;
-  Function suffixOnpressed;
-  Function validator;
-  String label;
+      required this.label,
+      this.isPassword = true});
+  final TextEditingController controller;
+ final bool obscure;
+ final Function suffixOnpressed;
+ final Function validator;
+ final String label;
+ final bool isPassword;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -25,15 +27,19 @@ class TxtFormPasswordWidget extends StatelessWidget {
         fontSize: 16,
       ),
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.lock_outline),
         labelText: label,
-        suffixIcon: IconButton(
-          icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
-          onPressed: () {
-            suffixOnpressed();
-          },
+        suffixIcon: Visibility(
+          visible: isPassword,
+          child: IconButton(
+            icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
+            onPressed: () {
+              suffixOnpressed();
+            },
+          ),
         ),
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }

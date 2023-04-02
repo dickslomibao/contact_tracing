@@ -11,9 +11,9 @@ class Validator {
     return null;
   }
 
-  static dynamic validateName(value) {
+  static dynamic validateName(value, error) {
     if (value == null || value.isEmpty) {
-      return "Name is required";
+      return error;
     }
 
     return null;
@@ -23,7 +23,6 @@ class Validator {
     if (value == null || value.isEmpty) {
       return "Address is required";
     }
-
     return null;
   }
 

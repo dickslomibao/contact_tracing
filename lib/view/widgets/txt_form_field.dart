@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
-  TextFormFieldWidget({
-    super.key,
-    required this.controller,
-    required this.validator,
-    required this.label,
-    required this.icon,
-  });
-  TextEditingController controller;
-  Function validator;
-  String label;
-  Icon icon;
+  const TextFormFieldWidget(
+      {super.key,
+      required this.controller,
+      required this.validator,
+      required this.label});
+  final TextEditingController controller;
+  final Function validator;
+  final String label;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -20,9 +17,10 @@ class TextFormFieldWidget extends StatelessWidget {
         return validator(value);
       },
       decoration: InputDecoration(
-        prefixIcon: icon,
         labelText: label,
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
       style: const TextStyle(
         fontSize: 16,

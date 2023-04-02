@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     "iContact",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   spacer(10),
                   Text(
@@ -83,7 +83,9 @@ class HomeScreen extends StatelessWidget {
                   spacer(12),
                   OutlineBtnWidget(
                     label: 'Sign up as Establishement',
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go('/registerEstablisment');
+                    },
                   ),
                 ],
               ),

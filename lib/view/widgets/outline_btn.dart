@@ -2,13 +2,13 @@ import 'package:contact_tracing/constant/style.dart';
 import 'package:flutter/material.dart';
 
 class OutlineBtnWidget extends StatelessWidget {
-  OutlineBtnWidget({
-    Key? key,
+  const OutlineBtnWidget({
+    super.key,
     required this.label,
     required this.onPressed,
   });
-  Function onPressed;
-  String label;
+  final Function onPressed;
+  final String label;
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(

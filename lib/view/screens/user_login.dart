@@ -1,9 +1,12 @@
 import 'package:contact_tracing/constant/style.dart';
+import 'package:contact_tracing/services/firebase_services.dart';
+import 'package:contact_tracing/utils/show_dialog_process.dart';
 import 'package:contact_tracing/view/widgets/elevated_btn.dart';
 import 'package:contact_tracing/view/widgets/txt_form_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:contact_tracing/view/widgets/txt_form_field_password.dart';
+import 'package:contact_tracing/view_model/validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScren extends StatefulWidget {
   const LoginScren({super.key});
@@ -44,7 +47,7 @@ class _LoginScrenState extends State<LoginScren> {
                     Text(
                       "iContact",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Image.asset('assets/images/img-home1.png'),
                     Text(
@@ -54,50 +57,51 @@ class _LoginScrenState extends State<LoginScren> {
                     ),
                     spacer(20),
                     TextFormFieldWidget(
-                      icon: const Icon(Icons.email_outlined),
                       controller: emailController,
                       validator: (value) {
-                        print(value);
-                        if (value == null || value.isEmpty) {
-                          return "Email address is required";
-                        }
-                        return null;
+                        return Validator.validateEmail(value);
                       },
                       label: 'Email Addresss',
                     ),
                     spacer(10),
-                    TextFormField(
-                      controller: passwordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Password is required";
-                        }
-                        return null;
+                    TxtFormPasswordWidget(
+                      suffixOnpressed: () {
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
                       },
-                      obscureText: showPassword,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.key_outlined),
-                        labelText: "Password",
-                        suffixIcon: IconButton(
-                          icon: Icon(showPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                        ),
-                        border: const OutlineInputBorder(),
-                      ),
+                      controller: passwordController,
+                      label: 'Password',
+                      validator: (value) {
+                        return Validator.validatePassword(value);
+                      },
+                      obscure: showPassword,
                     ),
                     spacer(20),
                     ElevatedButtonWidget(
-                      onPressed: () {
-                        _formKey.currentState!.validate();
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          dialogProccess(
+                            context: context,
+                            label: 'Processing...',
+                            dismissible: false,
+                          );
+                          String status = await FirebaseService.loginAccount(
+                              email: emailController.text,
+                              password: passwordController.text);
+
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                            if (status == "success") {
+                              context.go('/');
+                              return;
+                            }
+                            dialogProccess(
+                              context: context,
+                              label: status,
+                            );
+                          }
+                        }
                       },
                       label: 'Login',
                     ),

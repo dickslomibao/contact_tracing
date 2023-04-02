@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Widget spacer(double height) {
   return SizedBox(
@@ -10,12 +9,12 @@ Widget spacer(double height) {
 const mainColor = Color(0xffDC9754);
 const whiteColor = Color(0xffFBF9F7);
 const blackColor = Color(0xff1F1F1F);
-const txtColor = Color.fromRGBO(0, 0, 0, .7);
+const txtColor = Color.fromRGBO(0, 0, 0, .8);
 final roundedBtn = RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(10),
 );
 const btnTxtStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: FontWeight.w600,
   color: whiteColor,
 );
@@ -24,7 +23,7 @@ final outlineBtnStyle = OutlinedButton.styleFrom(
   side: const BorderSide(color: mainColor),
 );
 const outlineBtnTxtStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: FontWeight.w600,
   color: mainColor,
 );
