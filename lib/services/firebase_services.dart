@@ -72,6 +72,7 @@ class FirebaseService {
     List<Map<String, dynamic>> data = [];
     final temp = await store
         .collection('logs')
+        .where('establishment_uid', isEqualTo: uid())
         .where(
           'date',
           isEqualTo: date,
