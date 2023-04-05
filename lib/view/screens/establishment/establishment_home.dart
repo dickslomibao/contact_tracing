@@ -1,9 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_tracing/constant/style.dart';
+import 'package:contact_tracing/services/firebase_services.dart';
+import 'package:contact_tracing/utils/date_picker_dialog.dart';
+import 'package:contact_tracing/utils/show_dialog_process.dart';
+import 'package:contact_tracing/view/widgets/drop_down.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class EstablishmentHome extends StatelessWidget {
   const EstablishmentHome({super.key});
@@ -11,6 +17,31 @@ class EstablishmentHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          String status = "Invalid qr code.";
+          String qr = await FlutterBarcodeScanner.scanBarcode(
+              '#ffffff', 'Cancel', true, ScanMode.BARCODE);
+          if (qr != '-1') {
+            if (await FirebaseService.uidIsValid(qr)) {
+              await FirebaseService.storeLogs(qr);
+              status = "Success...";
+            }
+            if (context.mounted) {
+              dialogProccess(
+                context: context,
+                label: status,
+                dismissible: true,
+              );
+            }
+          }
+        },
+        child: const Icon(
+          Icons.qr_code_scanner,
+          color: Colors.white,
+          size: 30,
+        ),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
@@ -21,38 +52,17 @@ class EstablishmentHome extends StatelessWidget {
           ),
         ),
         actions: [
-          DropdownButtonHideUnderline(
-            child: DropdownButton(
-              elevation: 0,
-              icon: const Icon(Icons.more_vert),
-              items: const [
-                DropdownMenuItem(
-                  value: 'logout',
-                  child: Text(
-                    'Logout',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: txtColor,
-                    ),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 'account',
-                  child: Text(
-                    'Profie',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: txtColor,
-                    ),
-                  ),
-                ),
-              ],
-              onChanged: (value) async {
-                if (value == "logout") {
-                  await FirebaseAuth.instance.signOut();
+          DropDownWidget(
+            onChange: (value) async {
+              if (value == 'logout') {
+                await FirebaseService.logout();
+                if (context.mounted) {
+                  context.goNamed('home');
                 }
-              },
-            ),
+              } else {
+                context.goNamed('establismentProfle');
+              }
+            },
           )
         ],
       ),
@@ -65,19 +75,24 @@ class EstablishmentHome extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  String qr = await FlutterBarcodeScanner.scanBarcode(
-                      '#ffffff', 'Cancel', true, ScanMode.BARCODE);
-                  if (qr != '-1') {
-                    await FirebaseFirestore.instance.collection('logs').add({
-                      'user_uid': qr,
-                      'establishment_uid':
-                          FirebaseAuth.instance.currentUser!.uid,
-                      'date': DateTime.now(),
-                    });
-                    EasyLoading.showSuccess('Success');
+                  final date = await datePicker(
+                    context,
+                  );
+                  if (context.mounted) {
+                    if (date != null) {
+                      context.goNamed(
+                        'establishmentData',
+                        queryParams: {
+                          'date': DateFormat('yyyy-MM-dd').format(date)
+                        },
+                      );
+                    }
                   }
                 },
-                child: const Text('Scan'),
+                child: const Text(
+                  'Filter data',
+                  style: btnTxtStyle,
+                ),
               )
             ],
           ),

@@ -5,7 +5,6 @@ Widget spacer(double height) {
     height: height,
   );
 }
-
 const mainColor = Color(0xffDC9754);
 const whiteColor = Color(0xffFBF9F7);
 const blackColor = Color(0xff1F1F1F);

@@ -26,7 +26,6 @@ class _RegistersEstablishmentState extends State<RegistersEstablishment> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController comfirmPasswordController = TextEditingController();
-  final collectionPath = "users";
 
   void rigesterClient() {
     if (_formKey.currentState!.validate()) {
@@ -42,7 +41,7 @@ class _RegistersEstablishmentState extends State<RegistersEstablishment> {
                 label: 'Creating account...',
                 dismissible: false,
               );
-              String status = await EstablishmentViewModel.createAccount(
+              String status = await EstablishmentProvider.createAccount(
                 Establishment(
                   addess: addressController.text,
                   contactPerson: contactPersonController.text,
@@ -54,7 +53,7 @@ class _RegistersEstablishmentState extends State<RegistersEstablishment> {
               if (context.mounted) {
                 Navigator.of(context).pop();
                 if (status == 'success') {
-                  context.go('/');
+                  context.go('/establishmentHome');
                 } else {
                   dialogProccess(
                     context: context,

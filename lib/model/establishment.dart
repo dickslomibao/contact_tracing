@@ -19,7 +19,7 @@ class Establishment {
     return {
       'name': name,
       'contactPerson': contactPerson,
-      'addess': addess,
+      'address': addess,
       'type': type,
     };
   }

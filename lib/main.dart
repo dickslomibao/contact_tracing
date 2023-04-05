@@ -1,10 +1,13 @@
 import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/firebase_options.dart';
+import 'package:contact_tracing/view_model/client_vmodel.dart';
+import 'package:contact_tracing/view_model/establishment_vmode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:contact_tracing/route.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,37 +22,47 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: primaryColor,
-        fontFamily: GoogleFonts.montserrat().fontFamily,
-        textTheme: const TextTheme(
-          titleMedium: TextStyle(
-            fontSize: 38,
-            fontWeight: FontWeight.w900,
-            color: mainColor,
-          ),
-          titleSmall: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color: txtColor,
-          ),
-          displayMedium: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: txtColor,
-          ),
-          displayLarge: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.w600,
-            color: txtColor,
-          ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ClientProvider(),
         ),
-        appBarTheme: const AppBarTheme(),
+        ChangeNotifierProvider(
+          create: (_) => EstablishmentProvider(),
+        ),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: primaryColor,
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+          textTheme: const TextTheme(
+            titleMedium: TextStyle(
+              fontSize: 38,
+              fontWeight: FontWeight.w900,
+              color: mainColor,
+            ),
+            titleSmall: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: txtColor,
+            ),
+            displayMedium: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: txtColor,
+            ),
+            displayLarge: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w600,
+              color: txtColor,
+            ),
+          ),
+          appBarTheme: const AppBarTheme(),
+        ),
+        routerConfig: router,
+        builder: EasyLoading.init(),
       ),
-      routerConfig: router,
-      builder: EasyLoading.init(),
     );
   }
 }

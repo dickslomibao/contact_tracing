@@ -10,7 +10,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width - 100;
-
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(

@@ -1,8 +1,11 @@
 import 'package:contact_tracing/constant/style.dart';
+import 'package:contact_tracing/services/firebase_services.dart';
+import 'package:contact_tracing/view/widgets/drop_down.dart';
 import 'package:contact_tracing/view_model/client_vmodel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ClientHome extends StatelessWidget {
   const ClientHome({
@@ -22,67 +25,50 @@ class ClientHome extends StatelessWidget {
           ),
         ),
         actions: [
-          DropdownButtonHideUnderline(
-            child: DropdownButton(
-              elevation: 0,
-              icon: const Icon(Icons.more_vert),
-              items: const [
-                DropdownMenuItem(
-                  value: 'logout',
-                  child: Text(
-                    'Logout',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: txtColor,
-                    ),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 'account',
-                  child: Text(
-                    'Profie',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: txtColor,
-                    ),
-                  ),
-                ),
-              ],
-              onChanged: (value) {
-                if (value == "logout") {
-                  FirebaseAuth.instance.signOut();
+          DropDownWidget(
+            onChange: (value) async {
+              if (value == 'logout') {
+                await FirebaseService.logout();
+                if (context.mounted) {
+                  context.goNamed('home');
                 }
-              },
-            ),
-          )
+              } else {
+                context.goNamed('clientProfile');
+              }
+            },
+          ),
         ],
       ),
       body: SafeArea(
-        child: FutureBuilder(
-          future: ClientViewModel.getData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  Text(
-                    "Hi, ${snapshot.data!['firstname']} ${snapshot.data!['lastname']}",
-                    style: const TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w600,
-                    ),
+        child: Consumer<ClientProvider>(
+          builder: (context, value, child) {
+            return FutureBuilder(
+              future: value.fetchData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Hi, ${value.data['firstname']} ${value.data['lastname']}",
+                        style: const TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      spacer(20),
+                      QrImage(
+                        data: value.data['uid'],
+                      ),
+                    ],
                   ),
-                  spacer(20),
-                  QrImage(
-                    data: snapshot.data!['uid'],
-                  ),
-                ],
-              ),
+                );
+              },
             );
           },
         ),

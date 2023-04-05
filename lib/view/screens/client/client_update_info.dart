@@ -1,26 +1,22 @@
 import 'package:contact_tracing/constant/style.dart';
-import 'package:contact_tracing/model/client.dart';
-import 'package:contact_tracing/utils/date_picker_dialog.dart';
 import 'package:contact_tracing/utils/show_dialog_process.dart';
-import 'package:contact_tracing/view/widgets/comfirm_alert.dart';
 import 'package:contact_tracing/view/widgets/date_picker_field.dart';
 import 'package:contact_tracing/view/widgets/elevated_btn.dart';
 import 'package:contact_tracing/view/widgets/txt_form_field.dart';
-import 'package:contact_tracing/view/widgets/txt_form_field_password.dart';
 import 'package:contact_tracing/view_model/client_vmodel.dart';
 import 'package:contact_tracing/view_model/validator.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class RegisterClient extends StatefulWidget {
-  const RegisterClient({super.key});
-
+class ClientUpdateInfoScreen extends StatefulWidget {
+  const ClientUpdateInfoScreen({super.key, required this.client});
+  final Map<String, dynamic> client;
   @override
-  State<RegisterClient> createState() => _RegisterClientState();
+  State<ClientUpdateInfoScreen> createState() => _ClientUpdateInfoScreenState();
 }
 
-class _RegisterClientState extends State<RegisterClient> {
+class _ClientUpdateInfoScreenState extends State<ClientUpdateInfoScreen> {
   final _formKey = GlobalKey<FormState>();
   bool showPassword = true;
   TextEditingController firstnameController = TextEditingController();
@@ -28,56 +24,22 @@ class _RegisterClientState extends State<RegisterClient> {
   TextEditingController lastnameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController birthdateController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController comfirmPasswordController = TextEditingController();
 
-  void rigesterClient() {
-    if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return ComfirmAlert(
-            onCancel: () {},
-            onYes: () async {
-              Navigator.of(context).pop();
-              dialogProccess(
-                context: context,
-                label: 'Creating account...',
-                dismissible: false,
-              );
-              String status = await ClientProvider.createAccount(
-                Client(
-                  firstname: firstnameController.text,
-                  middlename: middlenameController.text,
-                  lastname: lastnameController.text,
-                  address: addressController.text,
-                  birthdate: birthdateController.text,
-                  email: emailController.text,
-                  password: passwordController.text,
-                ),
-              );
-              if (context.mounted) {
-                Navigator.of(context).pop();
-                if (status == 'success') {
-                  context.go('/');
-                } else {
-                  dialogProccess(
-                    context: context,
-                    label: status,
-                    dismissible: false,
-                  );
-                }
-              }
-            },
-          );
-        },
-      );
-    }
+  @override
+  void initState() {
+    
+    super.initState();
+    firstnameController.text = widget.client['firstname'];
+    middlenameController.text = widget.client['middlename'];
+    lastnameController.text = widget.client['lastname'];
+    addressController.text = widget.client['address'];
+    birthdateController.text = widget.client['birthdate'];
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ClientProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -105,7 +67,7 @@ class _RegisterClientState extends State<RegisterClient> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      "Create an account",
+                      "Update Information",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 27,
@@ -159,7 +121,11 @@ class _RegisterClientState extends State<RegisterClient> {
                     spacer(10),
                     DateField(
                       onTap: () async {
-                        final pickedDate = await datePicker(context);
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(DateTime.now().year + 1));
                         if (pickedDate != null) {
                           setState(() {
                             birthdateController.text =
@@ -171,53 +137,28 @@ class _RegisterClientState extends State<RegisterClient> {
                       controller: birthdateController,
                     ),
                     spacer(20),
-                    const Text(
-                      'Account Credentials',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: txtColor,
-                      ),
-                    ),
-                    spacer(20),
-                    TextFormFieldWidget(
-                      controller: emailController,
-                      validator: (value) {
-                        return Validator.validateEmail(value);
-                      },
-                      label: 'Email Addresss',
-                    ),
-                    spacer(10),
-                    TxtFormPasswordWidget(
-                      controller: passwordController,
-                      label: 'Password',
-                      obscure: showPassword,
-                      suffixOnpressed: () {
-                        setState(() {
-                          showPassword = !showPassword;
-                        });
-                      },
-                      validator: (value) {
-                        return Validator.validatePassword(value);
-                      },
-                    ),
-                    spacer(10),
-                    TxtFormPasswordWidget(
-                      isPassword: false,
-                      controller: comfirmPasswordController,
-                      label: 'Re-type password',
-                      suffixOnpressed: () {},
-                      validator: (value) {
-                        return Validator.validateComfirmPassword(
-                            value, passwordController.text);
-                      },
-                    ),
-                    spacer(20),
                     ElevatedButtonWidget(
                       onPressed: () {
-                        rigesterClient();
+                        if (_formKey.currentState!.validate()) {
+                          dialogProccess(
+                            context: context,
+                            label: 'Updating...',
+                            dismissible: false,
+                          );
+                          provider.udpateData({
+                            'firstname': firstnameController.text,
+                            'middlename': middlenameController.text,
+                            'lastname': lastnameController.text,
+                            'address': addressController.text,
+                            'birthdate': birthdateController.text,
+                          });
+                          if (context.mounted) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          }
+                        }
                       },
-                      label: 'Sign up',
+                      label: 'Save',
                     ),
                   ],
                 ),
