@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   spacer(12),
                   OutlineBtnWidget(
-                    label: 'Sign up as Establishement',
+                    label: 'Sign up as Establishment',
                     onPressed: () {
                       context.go('/registerEstablisment');
                     },

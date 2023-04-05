@@ -1,4 +1,3 @@
-import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/services/firebase_services.dart';
 import 'package:contact_tracing/view/widgets/drop_down.dart';
 import 'package:flutter/material.dart';

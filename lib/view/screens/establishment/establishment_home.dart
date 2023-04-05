@@ -1,13 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_tracing/constant/style.dart';
 import 'package:contact_tracing/services/firebase_services.dart';
 import 'package:contact_tracing/utils/date_picker_dialog.dart';
 import 'package:contact_tracing/utils/show_dialog_process.dart';
 import 'package:contact_tracing/view/widgets/drop_down.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 

@@ -106,7 +106,7 @@ class _RegistersEstablishmentState extends State<RegistersEstablishment> {
                     ),
                     spacer(30),
                     const Text(
-                      'Establishement Information',
+                      'Establishment Information',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
